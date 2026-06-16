@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Letter</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+height:100vh;overflow:hidden;font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+position:relative;
+}
+#envelope{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);width:320px;height:220px;cursor:pointer}
+.back{position:absolute;width:100%;height:100%;background:#f3d4ae;border-radius:8px}
+.left{position:absolute;width:0;height:0;border-top:110px solid transparent;border-bottom:110px solid transparent;border-left:160px solid #e1bb94}
+.right{position:absolute;right:0;width:0;height:0;border-top:110px solid transparent;border-bottom:110px solid transparent;border-right:160px solid #ddb184}
+.front{position:absolute;bottom:0;width:0;height:0;border-left:160px solid transparent;border-right:160px solid transparent;border-bottom:110px solid #e8c49d;z-index:3}
+.flap{position:absolute;width:0;height:0;border-left:160px solid transparent;border-right:160px solid transparent;border-top:110px solid #f0cdaa;transform-origin:top;transition:1s;z-index:5}
+.flap.open{transform:rotateX(180deg)}
+.hint{position:absolute;width:100%;text-align:center;bottom:-45px;color:white;font-size:18px}
+
+.float-item{
+position:absolute;left:50%;bottom:120px;transform:translateX(-50%);
+opacity:0;z-index:20;text-align:center;
+animation:floatUp 67s cubic-bezier(.15,.85,.2,1) forwards;width:max-content;
+}
+@keyframes floatUp{
+0%{opacity:0;transform:translate(-50%,0) scale(.85)}
+10%{opacity:1}
+100%{opacity:1;transform:translate(-50%,-850px) scale(1)}
+}
+.name{font-size:40px;font-weight:bold;color:white;text-shadow:0 2px 10px rgba(0,0,0,.3)}
+.age{font-size:22px;margin-top:10px;color:white}
+.photo{width:250px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.message{max-width:500px;background:rgba(255,255,255,.92);padding:20px;border-radius:16px;font-size:20px;line-height:1.7;box-shadow:0 10px 25px rgba(0,0,0,.15)}
+</style>
+</head>
+<body>
+
+<div id="envelope">
+<div class="back"></div>
+<div class="flap" id="flap"></div>
+<div class="left"></div>
+<div class="right"></div>
+<div class="front"></div>
+<div class="hint">💌 Nhấn vào phong bì</div>
+</div>
+
+<audio id="music" loop>
+<source src="https://raw.githubusercontent.com/Rukkhadevata-Wisdom/HuY/main/Birday.mp3.m4r">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<script>
+let opened=false;
+
+document.getElementById("envelope").addEventListener("click",()=>{
+if(opened) return;
+opened=true;
+
+document.getElementById("flap").classList.add("open");
+
+confetti({particleCount:250,spread:180,origin:{y:0.8}});
+
+document.getElementById("music").play().catch(()=>{});
+
+setTimeout(()=>{
+spawn(`<div class="name">Chúc mừng sinh nhật</div><div class="age">🎂Bé Trịnh Như Ý 17 tuổi🎂</div>`);
+},1200);
+
+setTimeout(()=>{
+spawn(`<img class="photo" src="https://raw.githubusercontent.com/Rukkhadevata-Wisdom/T/refs/heads/main/IMG_3465.jpeg">`);
+},23000);
+
+setTimeout(()=>{
+spawn(`<div class="message">Chúc em lúc nào cũng xinh đẹp và dễ thương như bây giờ.</div>`);
+},5000);
+
+setTimeout(()=>{
+spawn(`<div class="message">Chúc em sau này sẽ kiếm được nhiều tiền để ăn thật đã, sập quán luôn.</div>`);
+},10000);
+
+setTimeout(()=>{
+spawn(`<div class="message">Mong là em yêu sẽ mãi mãi yêu anh và yêu anh nhiều nhiều như anh yêu em vậy. Anh thật là may mắn khi có em bên cạnh, anh yêu em. À, quà cho em yêu nè:3</div>`);
+},15000);
+});
+
+function spawn(html){
+const div=document.createElement("div");
+div.className="float-item";
+div.innerHTML=html;
+document.body.appendChild(div);
+}
+</script>
+
+</body>
+</html>
